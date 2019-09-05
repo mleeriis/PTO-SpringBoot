@@ -47,8 +47,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             HttpServletResponse res,
                                             FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
-		res.addHeader(SecurityConstraints.HEADER_STRING, SecurityConstraints.TOKEN_PREFIX);
+		
+		res.addHeader("Success", "Successfully Logged In");
 		System.out.println("$$$$$$$$$$$$$$$ SUCCESSFUL LOGIN $$$$$$$$$$$");
+		
 	}
 	
 }
