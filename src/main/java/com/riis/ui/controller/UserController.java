@@ -16,35 +16,36 @@ import com.riis.ui.model.request.UserDetailsRequestModel;
 import com.riis.ui.model.response.UserRest;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("employees")
 public class UserController {
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@GetMapping
 	public String getUser() {
 		return "getUser was called";
 	}
-	
+
 	@PostMapping
 	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
+
 		UserRest returnValue = new UserRest();
-		
+
 		UserDto userDto = new UserDto();
 		BeanUtils.copyProperties(userDetails, userDto);
-		
+
 		UserDto createUser = userService.createUser(userDto);
 		BeanUtils.copyProperties(createUser, returnValue);
-		
+	
 		return returnValue;
 	}
-	
+
 	@PutMapping
 	public String updateUser() {
 		return "updateUser was called";
 	}
-	
+
 	@DeleteMapping
 	public String deleteUser() {
 		return "deleteUser was called";

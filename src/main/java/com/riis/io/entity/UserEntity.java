@@ -3,30 +3,35 @@ package com.riis.io.entity;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="Employees")
 public class UserEntity implements Serializable {
 
 	private static final long serialVersionUID = 1369876620998898478L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@Column(nullable = false, length = 20)
+	@Column(name="Firstname", nullable = false, length = 20)
 	private String Firstname;
 
-	@Column(nullable = false, length = 40)
+	@Column(name="Lastname", nullable = false, length = 40)
 	private String Lastname;
 
-	@Column(nullable = false, length = 40)
+	@Column(name="email", nullable = false, length = 40)
 	private String email;
 
-	@Column(nullable = false)
+	@Column(name="RoleID", nullable = false)
 	private int RoleID;
 
-	@Column(nullable = false, length = 50)
+	@Column(name="Password", nullable = false, length = 50)
 	private String Password;
 
 	public int getId() {

@@ -5,37 +5,36 @@ import java.io.Serializable;
 public class UserDto implements Serializable {
 
 	private static final long serialVersionUID = -5537125870292466195L;
-	private int id;
-	private String firstName;
-	private String lastName;
+//	private int id;
+	private String firstname;
+	private String lastname;
 	private String email;
+	private int roleID;
+
 	private String password;
-	private String encryptedPassword;
-	private String emailVerificationToken;
-	private Boolean emailVerificationStatus;
 
-	public int getId() {
-		return id;
+//	public int getId() {
+//		return id;
+//	}
+//
+//	public void setId(int id) {
+//		this.id = id;
+//	}
+
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getLastname() {
+		return lastname;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	public String getEmail() {
@@ -46,36 +45,20 @@ public class UserDto implements Serializable {
 		this.email = email;
 	}
 
+	public int getRoleID() {
+		return roleID;
+	}
+
+	public void setRoleID(int roleID) {
+		this.roleID = roleID;
+	}
+
 	public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getEncryptedPassword() {
-		return encryptedPassword;
-	}
-
-	public void setEncryptedPassword(String encryptedPassword) {
-		this.encryptedPassword = encryptedPassword;
-	}
-
-	public String getEmailVerificationToken() {
-		return emailVerificationToken;
-	}
-
-	public void setEmailVerificationToken(String emailVerificationToken) {
-		this.emailVerificationToken = emailVerificationToken;
-	}
-
-	public Boolean getEmailVerificationStatus() {
-		return emailVerificationStatus;
-	}
-
-	public void setEmailVerificationStatus(Boolean emailVerificationStatus) {
-		this.emailVerificationStatus = emailVerificationStatus;
 	}
 
 }

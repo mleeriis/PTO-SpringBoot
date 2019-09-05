@@ -7,5 +7,5 @@ import com.riis.io.entity.UserEntity;
 
 @Repository
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
-	UserEntity findUserByEmail(String email);
+//	UserEntity findUserByEmail(String email);
 }

@@ -11,16 +11,16 @@ public class UserDetailsRequestModel {
 		return firstName;
 	}
 
-	public void setFirstname(String firstname) {
-		firstName = firstname;
+	public void setFirstname(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getLastname() {
 		return lastName;
 	}
 
-	public void setLastname(String lastname) {
-		lastName = lastname;
+	public void setLastname(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {
