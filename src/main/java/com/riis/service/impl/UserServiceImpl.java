@@ -1,7 +1,10 @@
 package com.riis.service.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,8 +37,9 @@ public class UserServiceImpl implements UserService {
 		userEntity.setLastname(user.getLastname());
 		userEntity.setEmail(user.getEmail());
 		userEntity.setRoleID(user.getRoleID());
-		userEntity.setPassword(user.getPassword());
-		//userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+//		userEntity.setPassword(user.getPassword());
+		// TODO: Using bCrypt on the password makes it too long to store in the database
+		userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
 
 		UserEntity storedUserDetails = userRepository.save(userEntity);
 
@@ -47,9 +51,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		UserEntity userEntity = userRepository.findByEmail(email);
+		
+		if(userEntity == null) throw new UsernameNotFoundException(email);
+		return new User(userEntity.getEmail(), userEntity.getPassword(), new ArrayList<>());
 	}
 
 }

@@ -32,13 +32,21 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		http
 		.cors().and()
 		.csrf().disable().authorizeRequests()
-		.antMatchers(HttpMethod.POST, "/employees")
-		.permitAll().anyRequest().authenticated();
+		.antMatchers(HttpMethod.POST, SecurityConstraints.CREATE_EMPLOYEE_URL)
+		.permitAll()
+		.anyRequest().authenticated()
+		.and().addFilter(getAuthenticationFilter());
 	}
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+	}
+	
+    protected AuthenticationFilter getAuthenticationFilter() throws Exception {
+	    final AuthenticationFilter filter = new AuthenticationFilter(authenticationManager());
+	    filter.setFilterProcessesUrl("/login");
+	    return filter;
 	}
 
 	
