@@ -1,0 +1,37 @@
+package com.riis.service.impl;
+
+import org.springframework.stereotype.Service;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.riis.io.entity.PTOEntity;
+import com.riis.io.repositories.PTORepository;
+import com.riis.service.PTOService;
+import com.riis.shared.dto.PTODto;
+
+@Service
+public class PTOServiceImpl implements PTOService {
+
+	@Autowired
+	PTORepository ptoRepository;
+
+	@Override
+	public PTODto createPTO(PTODto ptoDetails) {
+		// TODO Auto-generated method stub
+		PTOEntity ptoEntity = new PTOEntity();
+		BeanUtils.copyProperties(ptoDetails, ptoEntity);
+
+		ptoEntity.setEmployeeID(ptoDetails.getEmployeeID());
+		ptoEntity.setStartDate(ptoDetails.getStartDate());
+		ptoEntity.setEndDate(ptoDetails.getEndDate());
+		ptoEntity.setStatus(ptoDetails.getStatus());
+
+		PTOEntity storedPTODetails = ptoRepository.save(ptoEntity);
+
+		PTODto returnValue = new PTODto();
+		BeanUtils.copyProperties(storedPTODetails, returnValue);
+
+		return returnValue;
+	}
+
+}
