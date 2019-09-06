@@ -12,9 +12,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.riis.ui.model.request.UserLoginRequestModel;
 
 
@@ -47,8 +49,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             HttpServletResponse res,
                                             FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
-		
+		String email = ((User)auth.getPrincipal()).getUsername();
+		res.addHeader("email", email);
 		res.addHeader("Success", "Successfully Logged In");
+		
 		System.out.println("$$$$$$$$$$$$$$$ SUCCESSFUL LOGIN $$$$$$$$$$$");
 		
 	}

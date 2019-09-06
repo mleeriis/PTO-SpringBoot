@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.riis.UserRepository;
 import com.riis.io.entity.UserEntity;
+import com.riis.io.repositories.UserRepository;
 import com.riis.service.UserService;
 import com.riis.shared.dto.UserDto;
 
@@ -26,10 +26,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto createUser(UserDto user) {
-//		UserEntity foundUserDetails = userRepository.findByEmail(user.getEmail());
-//		
-//		if(foundUserDetails != null) throw new RuntimeException("Already exists");
-
 		UserEntity userEntity = new UserEntity();
 		BeanUtils.copyProperties(user, userEntity);
 
@@ -40,6 +36,8 @@ public class UserServiceImpl implements UserService {
 //		userEntity.setPassword(user.getPassword());
 		// TODO: Using bCrypt on the password makes it too long to store in the database
 		userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+		
+		userEntity.setId(user.getId());
 
 		UserEntity storedUserDetails = userRepository.save(userEntity);
 
@@ -51,10 +49,23 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public UserDto getUser(String email) {
+		UserEntity userDetails = userRepository.findByEmail(email);
+		
+		if(userDetails == null) throw new UsernameNotFoundException(email + " not found");
+		
+		UserDto returnValue = new UserDto();
+		BeanUtils.copyProperties(userDetails, returnValue);
+		
+		return returnValue;
+	}
+
+	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		UserEntity userEntity = userRepository.findByEmail(email);
-		
-		if(userEntity == null) throw new UsernameNotFoundException(email);
+
+		if (userEntity == null)
+			throw new UsernameNotFoundException(email);
 		return new User(userEntity.getEmail(), userEntity.getPassword(), new ArrayList<>());
 	}
 

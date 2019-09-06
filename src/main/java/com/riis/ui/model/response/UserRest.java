@@ -1,18 +1,18 @@
 package com.riis.ui.model.response;
 
 public class UserRest {
-	private String userID;
+	private int id;
 	private String firstname;
 	private String lastname;
 	private String email;
 	private int roleID;
 
-	public String getUserID() {
-		return userID;
+	public int getId() {
+		return id;
 	}
 
-	public void setUserID(String userID) {
-		this.userID = userID;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getFirstname() {
