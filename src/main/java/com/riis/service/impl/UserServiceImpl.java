@@ -14,6 +14,8 @@ import com.riis.io.entity.UserEntity;
 import com.riis.io.repositories.UserRepository;
 import com.riis.service.UserService;
 import com.riis.shared.dto.UserDto;
+import com.riis.ui.model.response.ErrorMessages;
+import com.riis.ws.exceptions.UserServiceException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,7 +27,9 @@ public class UserServiceImpl implements UserService {
 	BCryptPasswordEncoder passwordEncoder;
 
 	@Override
-	public UserDto createUser(UserDto user) {
+	public UserDto createUser(UserDto user) {		
+		if(userRepository.findByEmail(user.getEmail()) != null) throw new UserServiceException("Employee already exists");
+		
 		UserEntity userEntity = new UserEntity();
 		BeanUtils.copyProperties(user, userEntity);
 
