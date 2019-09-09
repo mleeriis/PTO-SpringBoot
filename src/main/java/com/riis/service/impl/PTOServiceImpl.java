@@ -51,10 +51,19 @@ public class PTOServiceImpl implements PTOService {
 
 
 	@Override
-	public PTODto updatePTO(String id, PTODto ptoDetails) {
-
+	public PTODto updatePTO(int id, PTODto ptoDetails) {
+		PTODto returnValue = new PTODto();
 		
-		return null;
+		PTOEntity foundPto = ptoRepository.findById(id);
+		
+		if(foundPto == null) throw new PTOServiceException("Id not found.");
+
+		foundPto.setStatus(ptoDetails.getStatus());	
+		
+		PTOEntity updatedPtoDetails = ptoRepository.save(foundPto);
+		BeanUtils.copyProperties(updatedPtoDetails, returnValue);		
+		
+		return returnValue;
 	}
 
 

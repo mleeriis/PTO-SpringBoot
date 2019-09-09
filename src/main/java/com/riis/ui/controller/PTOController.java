@@ -53,7 +53,7 @@ public class PTOController {
 		PTODto ptoDto = new PTODto();
 		BeanUtils.copyProperties(ptoDetails, ptoDto);
 		
-		PTODto updatePto = ptoService.updatePTO(id, ptoDto);
+		PTODto updatePto = ptoService.updatePTO(Integer.valueOf(id), ptoDto);
 		BeanUtils.copyProperties(updatePto, returnValue);
 		
 		return returnValue;
