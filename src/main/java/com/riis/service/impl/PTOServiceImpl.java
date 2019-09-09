@@ -2,8 +2,15 @@ package com.riis.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import com.riis.io.entity.PTOEntity;
 import com.riis.io.repositories.PTORepository;
 import com.riis.service.PTOService;
@@ -74,6 +81,23 @@ public class PTOServiceImpl implements PTOService {
 			throw new PTOServiceException("Id not found.");
 
 		ptoRepository.delete(foundPto);
+	}
+
+	@Override
+	public List<PTODto> getPTO(int employeeId, int roleId, int page, int limit) {
+		List<PTODto> returnValue = new ArrayList<>();
+
+		Pageable pageableRequest = PageRequest.of(page, limit);
+		Page<PTOEntity> ptoPage = ptoRepository.findAll(pageableRequest);
+		List<PTOEntity> ptoRequests = ptoPage.getContent();
+
+		for (PTOEntity ptoEntity : ptoRequests) {
+			PTODto ptoDto = new PTODto();
+			BeanUtils.copyProperties(ptoEntity, ptoDto);
+			returnValue.add(ptoDto);
+		}
+		
+		return returnValue;
 	}
 
 }
