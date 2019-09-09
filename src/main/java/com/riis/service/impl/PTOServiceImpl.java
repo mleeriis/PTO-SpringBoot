@@ -34,37 +34,46 @@ public class PTOServiceImpl implements PTOService {
 
 		return returnValue;
 	}
-	
+
 	@Override
 	public PTODto findPTO(int id) {
 		PTOEntity ptoDetails = ptoRepository.findById(id);
-		
-		if(ptoDetails == null) throw new PTOServiceException("Id not found.");
-		
+
+		if (ptoDetails == null)
+			throw new PTOServiceException("Id not found.");
+
 		PTODto returnValue = new PTODto();
-		
+
 		BeanUtils.copyProperties(ptoDetails, returnValue);
-		
-		
+
 		return returnValue;
 	}
-
 
 	@Override
 	public PTODto updatePTO(int id, PTODto ptoDetails) {
 		PTODto returnValue = new PTODto();
-		
-		PTOEntity foundPto = ptoRepository.findById(id);
-		
-		if(foundPto == null) throw new PTOServiceException("Id not found.");
 
-		foundPto.setStatus(ptoDetails.getStatus());	
-		
+		PTOEntity foundPto = ptoRepository.findById(id);
+
+		if (foundPto == null)
+			throw new PTOServiceException("Id not found.");
+
+		foundPto.setStatus(ptoDetails.getStatus());
+
 		PTOEntity updatedPtoDetails = ptoRepository.save(foundPto);
-		BeanUtils.copyProperties(updatedPtoDetails, returnValue);		
-		
+		BeanUtils.copyProperties(updatedPtoDetails, returnValue);
+
 		return returnValue;
 	}
 
+	@Override
+	public void deletePTO(int id) {
+		PTOEntity foundPto = ptoRepository.findById(id);
+
+		if (foundPto == null)
+			throw new PTOServiceException("Id not found.");
+
+		ptoRepository.delete(foundPto);
+	}
 
 }

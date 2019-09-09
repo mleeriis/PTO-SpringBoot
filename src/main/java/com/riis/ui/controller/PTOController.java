@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.riis.service.PTOService;
 import com.riis.shared.dto.PTODto;
 import com.riis.ui.model.request.PTODetailsRequestModel;
+import com.riis.ui.model.response.OperationStatusModel;
 import com.riis.ui.model.response.PTORest;
+import com.riis.ui.model.response.RequestOperationStatus;
 
 
 @RestController
@@ -59,9 +61,14 @@ public class PTOController {
 		return returnValue;
 	}
 
-	@DeleteMapping
-	public String deletePTORequest() {
-		return "delete pto was called";
+	@DeleteMapping(path="/{id}")
+	public OperationStatusModel deletePTORequest(@PathVariable String id) {
+		OperationStatusModel returnValue = new OperationStatusModel();
+		returnValue.setOperationName("DELETE");
+		ptoService.deletePTO(Integer.valueOf(id));
+		returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
+		
+		return returnValue;
 	}
 	
 //	@GetMapping

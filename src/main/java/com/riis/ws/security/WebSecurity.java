@@ -43,6 +43,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		.permitAll()
 		.antMatchers(HttpMethod.PUT, "/pto/**")
 		.permitAll()
+		.antMatchers(HttpMethod.DELETE, "/pto/**")
+		.permitAll()
 		.anyRequest().authenticated()
 		.and().addFilter(getAuthenticationFilter())
 		.sessionManagement()

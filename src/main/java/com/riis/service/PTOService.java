@@ -6,4 +6,5 @@ public interface PTOService {
 	PTODto createPTO(PTODto ptoDetails);
 	PTODto findPTO(int id);
 	PTODto updatePTO(int id, PTODto ptoDetails);
+	void deletePTO(int id);
 }
