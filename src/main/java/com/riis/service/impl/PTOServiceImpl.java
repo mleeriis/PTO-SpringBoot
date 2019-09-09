@@ -1,13 +1,14 @@
 package com.riis.service.impl;
 
 import org.springframework.stereotype.Service;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.riis.io.entity.PTOEntity;
 import com.riis.io.repositories.PTORepository;
 import com.riis.service.PTOService;
 import com.riis.shared.dto.PTODto;
+import com.riis.ws.exceptions.PTOServiceException;
 
 @Service
 public class PTOServiceImpl implements PTOService {
@@ -33,5 +34,28 @@ public class PTOServiceImpl implements PTOService {
 
 		return returnValue;
 	}
+	
+	@Override
+	public PTODto findPTO(int id) {
+		PTOEntity ptoDetails = ptoRepository.findById(id);
+		
+		if(ptoDetails == null) throw new PTOServiceException("Id not found.");
+		
+		PTODto returnValue = new PTODto();
+		
+		BeanUtils.copyProperties(ptoDetails, returnValue);
+		
+		
+		return returnValue;
+	}
+
+
+	@Override
+	public PTODto updatePTO(String id, PTODto ptoDetails) {
+
+		
+		return null;
+	}
+
 
 }
