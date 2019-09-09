@@ -15,6 +15,7 @@ import com.riis.io.entity.UserEntity;
 import com.riis.io.repositories.UserRepository;
 import com.riis.service.UserService;
 import com.riis.shared.dto.UserDto;
+import com.riis.ui.model.response.ErrorMessages;
 import com.riis.ws.exceptions.UserServiceException;
 
 @Service
@@ -27,9 +28,10 @@ public class UserServiceImpl implements UserService {
 	BCryptPasswordEncoder passwordEncoder;
 
 	@Override
-	public UserDto createUser(UserDto user) {		
-		if(userRepository.findByEmail(user.getEmail()) != null) throw new UserServiceException("Employee already exists");
-		
+	public UserDto createUser(UserDto user) {
+		if (userRepository.findByEmail(user.getEmail()) != null)
+			throw new UserServiceException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
+
 		UserEntity userEntity = new UserEntity();
 		BeanUtils.copyProperties(user, userEntity);
 
@@ -37,10 +39,8 @@ public class UserServiceImpl implements UserService {
 		userEntity.setLastname(user.getLastname());
 		userEntity.setEmail(user.getEmail());
 		userEntity.setRoleID(user.getRoleID());
-//		userEntity.setPassword(user.getPassword());
-		// TODO: Using bCrypt on the password makes it too long to store in the database
 		userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
-		
+
 		userEntity.setId(user.getId());
 
 		UserEntity storedUserDetails = userRepository.save(userEntity);
@@ -55,12 +55,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto getUser(String email) {
 		UserEntity userDetails = userRepository.findByEmail(email);
-		
-		if(userDetails == null) throw new UsernameNotFoundException(email + " not found");
-		
+
+		if (userDetails == null)
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+
 		UserDto returnValue = new UserDto();
 		BeanUtils.copyProperties(userDetails, returnValue);
-		
+
 		return returnValue;
 	}
 
@@ -69,17 +70,17 @@ public class UserServiceImpl implements UserService {
 		UserEntity userEntity = userRepository.findByEmail(email);
 
 		if (userEntity == null)
-			throw new UsernameNotFoundException(email);
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		return new User(userEntity.getEmail(), userEntity.getPassword(), new ArrayList<>());
 	}
 
 	@Override
 	public List<UserDto> getAllUsers() {
 		List<UserDto> returnValue = new ArrayList<>();
-		
+
 		Iterable<UserEntity> userList = userRepository.findAll();
-		
-		for(UserEntity userEntity : userList) {
+
+		for (UserEntity userEntity : userList) {
 			UserDto userDto = new UserDto();
 			BeanUtils.copyProperties(userEntity, userDto);
 			returnValue.add(userDto);

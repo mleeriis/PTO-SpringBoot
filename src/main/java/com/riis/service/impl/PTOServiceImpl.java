@@ -15,6 +15,7 @@ import com.riis.io.entity.PTOEntity;
 import com.riis.io.repositories.PTORepository;
 import com.riis.service.PTOService;
 import com.riis.shared.dto.PTODto;
+import com.riis.ui.model.response.ErrorMessages;
 import com.riis.ws.exceptions.PTOServiceException;
 
 @Service
@@ -25,7 +26,6 @@ public class PTOServiceImpl implements PTOService {
 
 	@Override
 	public PTODto createPTO(PTODto ptoDetails) {
-		// TODO Auto-generated method stub
 		PTOEntity ptoEntity = new PTOEntity();
 		BeanUtils.copyProperties(ptoDetails, ptoEntity);
 
@@ -47,7 +47,7 @@ public class PTOServiceImpl implements PTOService {
 		PTOEntity ptoDetails = ptoRepository.findById(id);
 
 		if (ptoDetails == null)
-			throw new PTOServiceException("Id not found.");
+			throw new PTOServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 
 		PTODto returnValue = new PTODto();
 
@@ -63,7 +63,7 @@ public class PTOServiceImpl implements PTOService {
 		PTOEntity foundPto = ptoRepository.findById(id);
 
 		if (foundPto == null)
-			throw new PTOServiceException("Id not found.");
+			throw new PTOServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 
 		foundPto.setStatus(ptoDetails.getStatus());
 
@@ -78,13 +78,13 @@ public class PTOServiceImpl implements PTOService {
 		PTOEntity foundPto = ptoRepository.findById(id);
 
 		if (foundPto == null)
-			throw new PTOServiceException("Id not found.");
+			throw new PTOServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 
 		ptoRepository.delete(foundPto);
 	}
 
 	@Override
-	public List<PTODto> getPTO(int employeeId, int roleId, int page, int limit) {
+	public List<PTODto> getPTO(int employeeId, int page, int limit) {
 		List<PTODto> returnValue = new ArrayList<>();
 
 		Pageable pageableRequest = PageRequest.of(page, limit);

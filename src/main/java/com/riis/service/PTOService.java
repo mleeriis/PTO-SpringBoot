@@ -9,5 +9,5 @@ public interface PTOService {
 	PTODto findPTO(int id);
 	PTODto updatePTO(int id, PTODto ptoDetails);
 	void deletePTO(int id);
-	List<PTODto> getPTO(int employeeId, int roleId, int page, int limit);
+	List<PTODto> getPTO(int employeeId, int page, int limit);
 }

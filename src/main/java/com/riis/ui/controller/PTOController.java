@@ -81,7 +81,7 @@ public class PTOController {
 			@RequestParam(value = "limit", defaultValue = "25") int limit) {
 		List<PTORest> returnValue = new ArrayList<>();
 
-		List<PTODto> ptoList = ptoService.getPTO(employeeID, roleID, page, limit);
+		List<PTODto> ptoList = ptoService.getPTO(employeeID, page, limit);
 
 		for (PTODto ptoDto : ptoList) {
 			PTORest ptoEntry = new PTORest();
