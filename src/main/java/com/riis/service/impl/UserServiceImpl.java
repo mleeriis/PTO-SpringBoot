@@ -1,6 +1,7 @@
 package com.riis.service.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +71,21 @@ public class UserServiceImpl implements UserService {
 		if (userEntity == null)
 			throw new UsernameNotFoundException(email);
 		return new User(userEntity.getEmail(), userEntity.getPassword(), new ArrayList<>());
+	}
+
+	@Override
+	public List<UserDto> getAllUsers() {
+		List<UserDto> returnValue = new ArrayList<>();
+		
+		Iterable<UserEntity> userList = userRepository.findAll();
+		
+		for(UserEntity userEntity : userList) {
+			UserDto userDto = new UserDto();
+			BeanUtils.copyProperties(userEntity, userDto);
+			returnValue.add(userDto);
+		}
+
+		return returnValue;
 	}
 
 }
