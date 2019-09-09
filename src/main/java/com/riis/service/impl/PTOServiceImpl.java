@@ -92,11 +92,18 @@ public class PTOServiceImpl implements PTOService {
 		List<PTOEntity> ptoRequests = ptoPage.getContent();
 
 		for (PTOEntity ptoEntity : ptoRequests) {
-			PTODto ptoDto = new PTODto();
-			BeanUtils.copyProperties(ptoEntity, ptoDto);
-			returnValue.add(ptoDto);
+			if (employeeId > 0 && ptoEntity.getEmployeeID() == employeeId) {
+				PTODto ptoDto = new PTODto();
+				BeanUtils.copyProperties(ptoEntity, ptoDto);
+				returnValue.add(ptoDto);
+			} else if (employeeId == 0) {
+				PTODto ptoDto = new PTODto();
+				BeanUtils.copyProperties(ptoEntity, ptoDto);
+				returnValue.add(ptoDto);
+			}
+			
 		}
-		
+
 		return returnValue;
 	}
 

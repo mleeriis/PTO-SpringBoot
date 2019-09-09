@@ -75,7 +75,7 @@ public class PTOController {
 	}
 
 	@GetMapping
-	public List<PTORest> getPTORequests(@RequestParam(value = "empID", defaultValue = "37") int employeeID,
+	public List<PTORest> getPTORequests(@RequestParam(value = "empID", defaultValue = "0") int employeeID,
 			@RequestParam(value = "roleID", defaultValue = "2") int roleID,
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "limit", defaultValue = "25") int limit) {
