@@ -96,6 +96,7 @@ class UserServiceImplTest {
 
 	@Test
 	void throwExceptionWhenUserAlreadyCreated() {
+		// Used in findPTO(), updatePTO(), and deletePTO()
 		when(userRepository.findByEmail(anyString())).thenReturn(userEntityStub);
 
 		assertThrows(UserServiceException.class, () -> {
