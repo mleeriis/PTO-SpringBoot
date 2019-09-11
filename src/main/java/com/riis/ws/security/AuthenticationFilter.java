@@ -2,6 +2,7 @@ package com.riis.ws.security;
 
 import java.io.IOException;
 import java.util.ArrayList;
+//import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -18,6 +19,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.riis.ui.model.request.UserLoginRequestModel;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -43,18 +47,27 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	@Override
-    protected void successfulAuthentication(HttpServletRequest req,
-                                            HttpServletResponse res,
-                                            FilterChain chain,
-                                            Authentication auth) throws IOException, ServletException {
-		String email = ((User)auth.getPrincipal()).getUsername();
+	protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
+			Authentication auth) throws IOException, ServletException {
+		String email = ((User) auth.getPrincipal()).getUsername();
 		res.addHeader("email", email);
 		res.addHeader("Success", "Successfully Logged In");
+//		Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+		String key = "eyJhbGciOiJSUzI1NiIsImtpZCI6InMxIn0eyJzY3AiOlsib3BlbmlkIiwiZW1haWwiLCJwcm9maWxl" +
+				"eyJhbGciOiJSUzI1NiIsImtpZCI6InMxIn0eyJzY3AiOlsib3BlbmlkIiwiZW1haWwiLCJwcm9maWxl" +
+				"eyJhbGciOiJSUzI1NiIsImtpZCI6InMxIn0eyJzY3AiOlsib3BlbmlkIiwiZW1haWwiLCJwcm9maWxl" +
+				"eyJhbGciOiJSUzI1NiIsImtpZCI6InMxIn0eyJzY3AiOlsib3BlbmlkIiwiZW1haWwiLCJwcm9maWxl" +
+				"eyJhbGciOiJSUzI1NiIsImtpZCI6InMxIn0eyJzY3AiOlsib3BlbmlkIiwiZW1haWwiLCJwcm9maWxl" +
+				"eyJhbGciOiJSUzI1NiIsImtpZCI6InMxIn0eyJzY3AiOlsib3BlbmlkIiwiZW1haWwiLCJwcm9maWxl";
 		
+		String token = Jwts.builder().setSubject(email).signWith(SignatureAlgorithm.HS512, key).compact();
+
+		res.addHeader("Authorization", token);
+
 		System.out.println("$$$$$$$$$$$$$$$ SUCCESSFUL LOGIN $$$$$$$$$$$");
-		
+
 	}
-	
+
 }
