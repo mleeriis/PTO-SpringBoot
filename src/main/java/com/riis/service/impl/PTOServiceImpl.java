@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
+import com.riis.io.entity.CombinedEntity;
 import com.riis.io.entity.PTOEntity;
 import com.riis.io.repositories.PTORepository;
 import com.riis.service.PTOService;
@@ -88,7 +90,9 @@ public class PTOServiceImpl implements PTOService {
 		List<PTODto> returnValue = new ArrayList<>();
 
 		Pageable pageableRequest = PageRequest.of(page, limit);
-		Page<PTOEntity> ptoPage = ptoRepository.findAll(pageableRequest);
+		Page<PTOEntity> ptoPage = ptoRepository.findAllPtoByEmpID(employeeId, pageableRequest);
+	
+//		Page<PTOEntity> ptoPage = ptoRepository.findAll(pageableRequest);
 		List<PTOEntity> ptoRequests = ptoPage.getContent();
 
 		for (PTOEntity ptoEntity : ptoRequests) {

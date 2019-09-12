@@ -1,40 +1,14 @@
 package com.riis.io.entity;
 
-import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="Requests")
-public class PTOEntity implements Serializable {
-
-	private static final long serialVersionUID = -5961917022589138570L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+public class CombinedEntity {
 	private int Id;
-	
-	@Column(name="EmployeeID")
 	private int EmployeeID;
-	
-	@Column(name="StartDate")
 	private Date StartDate;
-	
-	@Column(name="EndDate")
 	private Date EndDate;
-	
-	@Column(name="Status")
 	private int Status;
-	
-	@Column(insertable = false, updatable = false)
 	private String FullName;
-	
 	
 	public int getId() {
 		return Id;
@@ -73,4 +47,6 @@ public class PTOEntity implements Serializable {
 		FullName = fullName;
 	}
 	
+	
+	//R.Id, R.EmployeeID, CONCAT(E.Firstname, ' ', E.Lastname) AS FullName, R.StartDate, R.EndDate, R.Status
 }

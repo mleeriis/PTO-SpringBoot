@@ -33,18 +33,18 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		http
 		.cors().and()
 		.csrf().disable().authorizeRequests()
-		.antMatchers(HttpMethod.POST, SecurityConstraints.CREATE_EMPLOYEE_URL)
-		.permitAll()
-		.antMatchers(HttpMethod.GET, "/employees/**")
-		.permitAll()
-		.antMatchers(HttpMethod.POST, "/pto")
-		.permitAll()
-		.antMatchers(HttpMethod.GET, "/pto/**")
-		.permitAll()
-		.antMatchers(HttpMethod.PUT, "/pto/**")
-		.permitAll()
-		.antMatchers(HttpMethod.DELETE, "/pto/**")
-		.permitAll()
+//		.antMatchers(HttpMethod.POST, SecurityConstraints.CREATE_EMPLOYEE_URL)
+//		.permitAll()
+//		.antMatchers(HttpMethod.GET, "/employees/**")
+//		.permitAll()
+//		.antMatchers(HttpMethod.POST, "/pto")
+//		.permitAll()
+//		.antMatchers(HttpMethod.GET, "/pto/**")
+//		.permitAll()
+//		.antMatchers(HttpMethod.PUT, "/pto/**")
+//		.permitAll()
+//		.antMatchers(HttpMethod.DELETE, "/pto/**")
+//		.permitAll()
 		.anyRequest().authenticated()
 		.and().addFilter(getAuthenticationFilter())
 		.addFilter(new AuthorizationFilter(authenticationManager()))
@@ -73,6 +73,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     	configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE","OPTIONS"));
     	configuration.setAllowCredentials(true);
     	configuration.setAllowedHeaders(Arrays.asList("*"));
+    	configuration.setExposedHeaders(Arrays.asList("Authorization"));
     	
     	final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     	source.registerCorsConfiguration("/**", configuration);
