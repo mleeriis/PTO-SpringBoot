@@ -88,24 +88,22 @@ public class PTOServiceImpl implements PTOService {
 	@Override
 	public List<PTODto> getPTO(int employeeId, int page, int limit) {
 		List<PTODto> returnValue = new ArrayList<>();
+		Page<PTOEntity> ptoPage;
 
 		Pageable pageableRequest = PageRequest.of(page, limit);
-		Page<PTOEntity> ptoPage = ptoRepository.findAllPtoByEmpID(employeeId, pageableRequest);
-	
+		if (employeeId == -1) {
+			ptoPage = ptoRepository.findAllPtoWithFullName(pageableRequest);
+		} else {
+			ptoPage = ptoRepository.findAllPtoByEmpID(employeeId, pageableRequest);
+		}
+
 //		Page<PTOEntity> ptoPage = ptoRepository.findAll(pageableRequest);
 		List<PTOEntity> ptoRequests = ptoPage.getContent();
 
 		for (PTOEntity ptoEntity : ptoRequests) {
-			if (employeeId > 0 && ptoEntity.getEmployeeID() == employeeId) {
-				PTODto ptoDto = new PTODto();
-				BeanUtils.copyProperties(ptoEntity, ptoDto);
-				returnValue.add(ptoDto);
-			} else if (employeeId == 0) {
-				PTODto ptoDto = new PTODto();
-				BeanUtils.copyProperties(ptoEntity, ptoDto);
-				returnValue.add(ptoDto);
-			}
-			
+			PTODto ptoDto = new PTODto();
+			BeanUtils.copyProperties(ptoEntity, ptoDto);
+			returnValue.add(ptoDto);
 		}
 
 		return returnValue;

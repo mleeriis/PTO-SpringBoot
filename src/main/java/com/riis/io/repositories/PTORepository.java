@@ -10,12 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.riis.io.entity.CombinedEntity;
 import com.riis.io.entity.PTOEntity;
 
-interface CombinedOutput{
-	String getFirstname();
-	String getLastname();
-	
-}
-
 @Repository
 public interface PTORepository extends PagingAndSortingRepository<PTOEntity, Integer> {
 	PTOEntity findById(int id);
@@ -25,5 +19,13 @@ public interface PTORepository extends PagingAndSortingRepository<PTOEntity, Int
 	"LEFT JOIN Employees AS E ON E.id = R.EmployeeID WHERE R.EmployeeID = :empID", 
 			nativeQuery=true)
 	Page<PTOEntity> findAllPtoByEmpID(@Param("empID") int empId, Pageable pageableRequest);
+	
+	@Query(value=
+			"SELECT R.Id, R.EmployeeID, CONCAT(E.Firstname, ' ', E.Lastname) AS FullName, R.StartDate, R.EndDate, R.Status FROM Requests AS R "+
+	"LEFT JOIN Employees AS E ON E.id = R.EmployeeID", 
+	countQuery="SELECT COUNT(*) FROM Requests AS R " + 
+			"LEFT JOIN Employees AS E ON E.id = R.EmployeeID",
+			nativeQuery=true)
+	Page<PTOEntity> findAllPtoWithFullName(Pageable pageableRequest);
 	
 }
