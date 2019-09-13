@@ -7,7 +7,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.riis.io.entity.CombinedEntity;
 import com.riis.io.entity.PTOEntity;
 
 @Repository
