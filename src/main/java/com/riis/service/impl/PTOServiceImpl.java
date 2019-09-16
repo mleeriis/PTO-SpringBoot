@@ -2,6 +2,7 @@ package com.riis.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,12 @@ public class PTOServiceImpl implements PTOService {
 
 	@Override
 	public PTODto createPTO(PTODto ptoDetails) {
+		if (ptoDetails.getEndDate().before(ptoDetails.getStartDate()))
+			throw new PTOServiceException(ErrorMessages.INVALID_END_DATE.getErrorMessage());
+		if (ptoDetails.getStartDate().before(new Date(System.currentTimeMillis()))
+				|| ptoDetails.getStartDate().equals(new Date(System.currentTimeMillis())))
+			throw new PTOServiceException(ErrorMessages.DATES_MUST_BE_IN_FUTURE.getErrorMessage());
+
 		PTOEntity ptoEntity = new PTOEntity();
 		BeanUtils.copyProperties(ptoDetails, ptoEntity);
 
@@ -95,7 +102,6 @@ public class PTOServiceImpl implements PTOService {
 			ptoPage = ptoRepository.findAllPtoByEmpID(employeeId, pageableRequest);
 		}
 
-//		Page<PTOEntity> ptoPage = ptoRepository.findAll(pageableRequest);
 		List<PTOEntity> ptoRequests = ptoPage.getContent();
 
 		for (PTOEntity ptoEntity : ptoRequests) {
