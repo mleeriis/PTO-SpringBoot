@@ -16,6 +16,7 @@ import com.riis.io.repositories.UserRepository;
 import com.riis.service.UserService;
 import com.riis.shared.dto.UserDto;
 import com.riis.ui.model.response.ErrorMessages;
+import com.riis.ws.exceptions.PTOServiceException;
 import com.riis.ws.exceptions.UserServiceException;
 
 @Service
@@ -64,6 +65,23 @@ public class UserServiceImpl implements UserService {
 
 		return returnValue;
 	}
+	
+	@Override
+	public UserDto updateUser(String email, UserDto user) {
+		UserDto returnValue = new UserDto();
+
+		UserEntity foundUser = userRepository.findByEmail(email);
+
+		if (foundUser == null)
+			throw new PTOServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+
+		foundUser.setPassword(passwordEncoder.encode(user.getPassword()));
+
+		UserEntity updatedUserEntity = userRepository.save(foundUser);
+		BeanUtils.copyProperties(updatedUserEntity, returnValue);
+
+		return returnValue;
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -88,5 +106,4 @@ public class UserServiceImpl implements UserService {
 
 		return returnValue;
 	}
-
 }
