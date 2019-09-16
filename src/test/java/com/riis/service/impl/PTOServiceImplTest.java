@@ -35,14 +35,14 @@ class PTOServiceImplTest {
 
 		ptoEntityStub.setId(1);
 		ptoEntityStub.setEmployeeID(1);
-		ptoEntityStub.setStartDate(new Date(2019 - 10 - 11));
-		ptoEntityStub.setEndDate(new Date(2019 - 10 - 30));
+		ptoEntityStub.setStartDate(Date.valueOf("2019-10-11"));
+		ptoEntityStub.setEndDate(Date.valueOf("2019-10-30"));
 		ptoEntityStub.setStatus(2);
 		
 		ptoDtoStub.setId(1);
 		ptoDtoStub.setEmployeeID(1);
-		ptoDtoStub.setStartDate(new Date(2019 - 10 - 11));
-		ptoDtoStub.setEndDate(new Date(2019 - 10 - 30));
+		ptoDtoStub.setStartDate(Date.valueOf("2019-10-11"));
+		ptoDtoStub.setEndDate(Date.valueOf("2019-10-30"));
 		ptoDtoStub.setStatus(2);
 
 	}
@@ -96,6 +96,19 @@ class PTOServiceImplTest {
 		assertEquals(ptoDtoStub.getStartDate(), createdPtoDto.getStartDate());
 		assertEquals(ptoDtoStub.getEndDate(), createdPtoDto.getEndDate());
 		assertEquals(ptoDtoStub.getStatus(), createdPtoDto.getStatus());
+	}
+	
+	@Test
+	void throwExceptionWhenTryingToCreateInvalidPto() {
+		ptoDtoStub.setStartDate(Date.valueOf("2018-01-01"));
+		assertThrows(PTOServiceException.class, () -> {ptoService.createPTO(ptoDtoStub);});
+		
+		ptoDtoStub.setEndDate(Date.valueOf("2019-10-11"));
+		ptoDtoStub.setStartDate(Date.valueOf("2019-10-30"));
+		assertThrows(PTOServiceException.class, () -> {ptoService.createPTO(ptoDtoStub);});
+		
+		ptoDtoStub.setStartDate(new Date(System.currentTimeMillis()));
+		assertThrows(PTOServiceException.class, () -> {ptoService.createPTO(ptoDtoStub);});
 	}
 	
 	
