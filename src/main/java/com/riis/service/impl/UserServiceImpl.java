@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
 	public List<UserDto> getAllUsers() {
 		List<UserDto> returnValue = new ArrayList<>();
 
-		Iterable<UserEntity> userList = userRepository.findAll();
+		Iterable<UserEntity> userList = userRepository.findAllEmployeesWithHoursBalance();
 
 		for (UserEntity userEntity : userList) {
 			UserDto userDto = new UserDto();

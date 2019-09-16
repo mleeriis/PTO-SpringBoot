@@ -33,6 +33,9 @@ public class UserEntity implements Serializable {
 
 	@Column(name="Password", nullable = false, length = 50)
 	private String Password;
+	
+	@Column(insertable = false, updatable = false)
+	private int HoursBalance;
 
 	public int getId() {
 		return id;

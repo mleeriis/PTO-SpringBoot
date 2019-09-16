@@ -6,6 +6,7 @@ public class UserRest {
 	private String lastname;
 	private String email;
 	private int roleID;
+	private int hoursBalance;
 
 	public int getId() {
 		return id;
@@ -45,6 +46,14 @@ public class UserRest {
 
 	public void setRoleID(int roleID) {
 		this.roleID = roleID;
+	}
+
+	public int getHoursBalance() {
+		return hoursBalance;
+	}
+
+	public void setHoursBalance(int HoursBalance) {
+		this.hoursBalance = HoursBalance;
 	}
 
 }
