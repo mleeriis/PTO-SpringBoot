@@ -104,6 +104,25 @@ class UserServiceImplTest {
 		});
 	}
 	
-	
+	@Test
+	void successfullyUpdateUser() {
+		when(userRepository.findByEmail(anyString())).thenReturn(userEntityStub);
+		when(passwordEncoder.encode(anyString())).thenReturn("password2");
+		userEntityStub.setPassword("password2");
+		when(userRepository.save(any(UserEntity.class))).thenReturn(userEntityStub);
+		
+		userDtoStub.setPassword("password2");
+		UserDto userDto = userService.updateUser("test@test.com", userDtoStub);
+		
+		assertNotNull(userDto);
+		assertEquals(userEntityStub.getFirstname(), userDto.getFirstname());
+		assertEquals(userEntityStub.getLastname(), userDto.getLastname());
+		assertEquals(userEntityStub.getEmail(), userDto.getEmail());
+		assertEquals(userEntityStub.getId(), userDto.getId());
+		assertEquals(userEntityStub.getRoleID(), userDto.getRoleID());
+		assertEquals(userEntityStub.getPassword(), userDto.getPassword());
+		verify(passwordEncoder, times(1)).encode("password2");
+		verify(userRepository, times(1)).save(any(UserEntity.class));	
+	}
 
 }
