@@ -121,4 +121,15 @@ public class UserServiceImpl implements UserService {
 		
 		return returnValue;
 	}
+
+	@Override
+	public void deleteUser(String email) {
+		UserEntity userEntity = userRepository.findByEmail(email);
+
+		if (userEntity == null)
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+
+		userRepository.delete(userEntity);
+		
+	}
 }

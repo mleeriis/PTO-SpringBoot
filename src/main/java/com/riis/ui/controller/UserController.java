@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.riis.service.UserService;
 import com.riis.shared.dto.UserDto;
 import com.riis.ui.model.request.UserDetailsRequestModel;
+import com.riis.ui.model.response.OperationStatusModel;
+import com.riis.ui.model.response.RequestOperationStatus;
 import com.riis.ui.model.response.UserRest;
 
 @RestController
@@ -60,9 +62,15 @@ public class UserController {
 		return returnValue;
 	}
 
-	@DeleteMapping
-	public String deleteUser() {
-		return "deleteUser was called";
+	@DeleteMapping(path = "/{email}")
+	public OperationStatusModel deleteUser(@PathVariable String email) {
+		OperationStatusModel returnValue = new OperationStatusModel();
+		returnValue.setOperationName("DELETE");
+		
+		userService.deleteUser(email);
+		returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
+
+		return returnValue;
 	}
 
 	@GetMapping
