@@ -35,7 +35,7 @@ public class UserEntity implements Serializable {
 	private String Password;
 	
 	@Column(insertable = false, updatable = false)
-	private int HoursBalance;
+	private int hoursBalance;
 
 	public int getId() {
 		return id;
@@ -83,6 +83,14 @@ public class UserEntity implements Serializable {
 
 	public void setPassword(String password) {
 		Password = password;
+	}
+
+	public int getHoursBalance() {
+		return hoursBalance;
+	}
+
+	public void setHoursBalance(int hoursBalance) {
+		this.hoursBalance = hoursBalance;
 	}
 
 }

@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
 			BeanUtils.copyProperties(userEntity, userDto);
 			returnValue.add(userDto);
 		}
-
+		
 		return returnValue;
 	}
 }
