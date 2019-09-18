@@ -12,7 +12,7 @@ public interface UserRepository extends PagingAndSortingRepository<UserEntity, I
 
 	
 	@Query(value=
-			"SELECT E.Id, E.Firstname, E.Lastname, E.email, E.RoleID, E.Password, C.HoursBalance FROM Employees AS E " + 
+			"SELECT * FROM Employees AS E " + 
 			"LEFT JOIN CurrentBalance AS C ON E.Id = C.EmployeeID", 
 	countQuery="SELECT COUNT(*) FROM Employees AS E " + 
 			"LEFT JOIN CurrentBalance AS C ON E.Id = C.EmployeeID",

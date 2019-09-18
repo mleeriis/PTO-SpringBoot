@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +19,11 @@ public class UserEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-
+	
+//	@OneToOne(fetch=FetchType.LAZY)
+//	@PrimaryKeyJoinColumn(name="Id", referencedColumnName="EmployeeID")
+//	private BalanceEntity balance;
+	
 	@Column(name="Firstname", nullable = false, length = 20)
 	private String Firstname;
 
@@ -34,8 +39,8 @@ public class UserEntity implements Serializable {
 	@Column(name="Password", nullable = false, length = 50)
 	private String Password;
 	
-	@Column(insertable = false, updatable = false)
-	private int hoursBalance;
+	@OneToOne(mappedBy="employee")
+	private BalanceEntity balance;
 
 	public int getId() {
 		return id;
@@ -85,12 +90,11 @@ public class UserEntity implements Serializable {
 		Password = password;
 	}
 
-	public int getHoursBalance() {
-		return hoursBalance;
+	public BalanceEntity getBalance() {
+		return balance;
 	}
 
-	public void setHoursBalance(int hoursBalance) {
-		this.hoursBalance = hoursBalance;
+	public void setBalance(BalanceEntity balance) {
+		this.balance = balance;
 	}
-
 }

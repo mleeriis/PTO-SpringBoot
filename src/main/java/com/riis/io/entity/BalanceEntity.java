@@ -2,11 +2,14 @@ package com.riis.io.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,9 +20,10 @@ public class BalanceEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int Id;
-
-	@Column(name = "EmployeeID", unique=true)
-	private int EmployeeID;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "EmployeeID", referencedColumnName="id")
+	private UserEntity employee;
 
 	@Column(name = "HoursBalance")
 	private int HoursBalance;
@@ -31,14 +35,14 @@ public class BalanceEntity implements Serializable {
 	public void setId(int id) {
 		Id = id;
 	}
-
-	public int getEmployeeID() {
-		return EmployeeID;
-	}
-
-	public void setEmployeeID(int employeeID) {
-		EmployeeID = employeeID;
-	}
+//
+//	public int getEmployeeID() {
+//		return EmployeeID;
+//	}
+//
+//	public void setEmployeeID(int employeeID) {
+//		EmployeeID = employeeID;
+//	}
 
 	public int getHoursBalance() {
 		return HoursBalance;

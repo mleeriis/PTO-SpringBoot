@@ -12,7 +12,7 @@ public class UserDto implements Serializable {
 	private int roleID;
 
 	private String password;
-	private int hoursBalance;
+	private BalanceDto balance;
 
 	public int getId() {
 		return id;
@@ -62,12 +62,12 @@ public class UserDto implements Serializable {
 		this.password = password;
 	}
 
-	public int getHoursBalance() {
-		return hoursBalance;
+	public BalanceDto getBalance() {
+		return balance;
 	}
 
-	public void setHoursBalance(int hoursBalance) {
-		this.hoursBalance = hoursBalance;
+	public void setBalance(BalanceDto balance) {
+		this.balance = balance;
 	}
 
 }

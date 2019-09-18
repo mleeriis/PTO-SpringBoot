@@ -1,12 +1,14 @@
 package com.riis.ui.model.response;
 
+import com.riis.shared.dto.BalanceDto;
+
 public class UserRest {
 	private int id;
 	private String firstname;
 	private String lastname;
 	private String email;
 	private int roleID;
-	private int hoursBalance;
+	private BalanceDto balance;
 
 	public int getId() {
 		return id;
@@ -48,12 +50,13 @@ public class UserRest {
 		this.roleID = roleID;
 	}
 
-	public int getHoursBalance() {
-		return hoursBalance;
+	public BalanceDto getBalance() {
+		return balance;
 	}
 
-	public void setHoursBalance(int HoursBalance) {
-		this.hoursBalance = HoursBalance;
+	public void setBalance(BalanceDto balance) {
+		this.balance = balance;
 	}
+
 
 }

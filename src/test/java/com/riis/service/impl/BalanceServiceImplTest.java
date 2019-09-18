@@ -31,11 +31,11 @@ class BalanceServiceImplTest {
 		MockitoAnnotations.initMocks(this);
 
 		balanceEntityStub.setId(1);
-		balanceEntityStub.setEmployeeID(1);
+//		balanceEntityStub.setEmployeeID(1);
 		balanceEntityStub.setHoursBalance(120);
 		
 		balanceDtoStub.setId(1);
-		balanceDtoStub.setEmployeeID(1);
+//		balanceDtoStub.setEmployeeID(1);
 		balanceDtoStub.setHoursBalance(120);
 	}
 
@@ -65,7 +65,7 @@ class BalanceServiceImplTest {
 		
 		assertNotNull(createdBalanceDto);
 		assertEquals(balanceDtoStub.getId(), createdBalanceDto.getId());
-		assertEquals(balanceDtoStub.getEmployeeID(), createdBalanceDto.getEmployeeID());
+//		assertEquals(balanceDtoStub.getEmployeeID(), createdBalanceDto.getEmployeeID());
 		assertEquals(balanceDtoStub.getHoursBalance(), createdBalanceDto.getHoursBalance());
 	}
 	

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.riis.io.entity.UserEntity;
 import com.riis.io.repositories.UserRepository;
 import com.riis.service.UserService;
+import com.riis.shared.dto.BalanceDto;
 import com.riis.shared.dto.UserDto;
 import com.riis.ui.model.response.ErrorMessages;
 import com.riis.ws.exceptions.PTOServiceException;
@@ -62,6 +63,11 @@ public class UserServiceImpl implements UserService {
 
 		UserDto returnValue = new UserDto();
 		BeanUtils.copyProperties(userDetails, returnValue);
+		
+		BalanceDto balanceDto = new BalanceDto();
+		BeanUtils.copyProperties(userDetails.getBalance(), balanceDto);
+		
+		returnValue.setBalance(balanceDto);
 
 		return returnValue;
 	}
@@ -96,11 +102,18 @@ public class UserServiceImpl implements UserService {
 	public List<UserDto> getAllUsers() {
 		List<UserDto> returnValue = new ArrayList<>();
 
-		Iterable<UserEntity> userList = userRepository.findAllEmployeesWithHoursBalance();
+//		Iterable<UserEntity> userList = userRepository.findAllEmployeesWithHoursBalance();
+		
+		Iterable<UserEntity> userList = userRepository.findAll();
 
 		for (UserEntity userEntity : userList) {
 			UserDto userDto = new UserDto();
 			BeanUtils.copyProperties(userEntity, userDto);
+			
+			BalanceDto balanceDto = new BalanceDto();
+			BeanUtils.copyProperties(userEntity.getBalance(), balanceDto);
+			userDto.setBalance(balanceDto);
+			
 			returnValue.add(userDto);
 		}
 		
