@@ -13,8 +13,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.riis.io.entity.BalanceEntity;
 import com.riis.io.entity.UserEntity;
 import com.riis.io.repositories.UserRepository;
+import com.riis.shared.dto.BalanceDto;
 import com.riis.shared.dto.UserDto;
 import com.riis.ws.exceptions.UserServiceException;
 
@@ -31,16 +33,20 @@ class UserServiceImplTest {
 
 	private UserEntity userEntityStub = new UserEntity();
 	private UserDto userDtoStub = new UserDto();
+	private BalanceEntity balanceEntityStub = new BalanceEntity();
+	private BalanceDto balanceDtoStub = new BalanceDto();
 
 	@BeforeEach
 	void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
+		
 		userEntityStub.setEmail("test@test.com");
 		userEntityStub.setFirstname("Joe");
 		userEntityStub.setLastname("Smith");
 		userEntityStub.setId(1);
 		userEntityStub.setRoleID(1);
 		userEntityStub.setPassword("password");
+		userEntityStub.setBalance(balanceEntityStub);
 		
 		userDtoStub.setEmail("test@test.com");
 		userDtoStub.setFirstname("Joe");
@@ -48,11 +54,12 @@ class UserServiceImplTest {
 		userDtoStub.setId(1);
 		userDtoStub.setRoleID(1);
 		userDtoStub.setPassword("password");
+		userDtoStub.setBalance(balanceDtoStub);
+		
 	}
 
 	@Test
 	void successfullyGetUserWithCorrectDetails() {
-
 		when(userRepository.findByEmail(anyString())).thenReturn(userEntityStub);
 
 		UserDto userDto = userService.getUser("test@test.com");
