@@ -6,7 +6,6 @@ public class BalanceDto implements Serializable {
 	private static final long serialVersionUID = 6363515336460393750L;
 
 	private int Id;
-//	private int EmployeeID;
 	private int HoursBalance;
 
 	public int getId() {
@@ -16,14 +15,6 @@ public class BalanceDto implements Serializable {
 	public void setId(int id) {
 		Id = id;
 	}
-
-//	public int getEmployeeID() {
-//		return EmployeeID;
-//	}
-//
-//	public void setEmployeeID(int employeeID) {
-//		EmployeeID = employeeID;
-//	}
 
 	public int getHoursBalance() {
 		return HoursBalance;

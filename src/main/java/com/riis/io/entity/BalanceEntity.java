@@ -35,14 +35,6 @@ public class BalanceEntity implements Serializable {
 	public void setId(int id) {
 		Id = id;
 	}
-//
-//	public int getEmployeeID() {
-//		return EmployeeID;
-//	}
-//
-//	public void setEmployeeID(int employeeID) {
-//		EmployeeID = employeeID;
-//	}
 
 	public int getHoursBalance() {
 		return HoursBalance;
@@ -50,5 +42,14 @@ public class BalanceEntity implements Serializable {
 
 	public void setHoursBalance(int hoursBalance) {
 		HoursBalance = hoursBalance;
+	}
+
+	public UserEntity getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(UserEntity employee) {
+		this.employee = employee;
+//		employee.setBalance(this);
 	}
 }

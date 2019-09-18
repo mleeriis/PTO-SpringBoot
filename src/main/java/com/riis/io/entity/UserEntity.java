@@ -2,6 +2,7 @@ package com.riis.io.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,7 +40,7 @@ public class UserEntity implements Serializable {
 	@Column(name="Password", nullable = false, length = 50)
 	private String Password;
 	
-	@OneToOne(mappedBy="employee")
+	@OneToOne(mappedBy="employee", cascade = CascadeType.ALL)
 	private BalanceEntity balance;
 
 	public int getId() {
@@ -96,5 +97,6 @@ public class UserEntity implements Serializable {
 
 	public void setBalance(BalanceEntity balance) {
 		this.balance = balance;
+		balance.setEmployee(this);
 	}
 }

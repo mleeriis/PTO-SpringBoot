@@ -38,13 +38,12 @@ public class BalanceServiceImpl implements BalanceService {
 
 	@Override
 	public BalanceDto createBalance(BalanceDto balanceDetails) {
-//		if(balanceRepository.findByEmployeeID(balanceDetails.getEmployeeID()) != null)
-//			throw new BalanceServiceException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
+		if(balanceRepository.findByEmployeeID(balanceDetails.getId()) != null)
+			throw new BalanceServiceException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
 		
 		BalanceEntity balanceEntity = new BalanceEntity();
 		BeanUtils.copyProperties(balanceDetails, balanceEntity);
-		
-//		balanceEntity.setEmployeeID(balanceDetails.getEmployeeID());
+
 		balanceEntity.setHoursBalance(balanceDetails.getHoursBalance());
 		
 		BalanceEntity storedBalanceDetails = balanceRepository.save(balanceEntity);

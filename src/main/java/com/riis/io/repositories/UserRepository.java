@@ -9,13 +9,4 @@ import com.riis.io.entity.UserEntity;
 @Repository
 public interface UserRepository extends PagingAndSortingRepository<UserEntity, Integer> {
 	UserEntity findByEmail(String email);
-
-	
-	@Query(value=
-			"SELECT * FROM Employees AS E " + 
-			"LEFT JOIN CurrentBalance AS C ON E.Id = C.EmployeeID", 
-	countQuery="SELECT COUNT(*) FROM Employees AS E " + 
-			"LEFT JOIN CurrentBalance AS C ON E.Id = C.EmployeeID",
-			nativeQuery=true)
-	Iterable<UserEntity> findAllEmployeesWithHoursBalance();
 }

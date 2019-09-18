@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.riis.io.entity.BalanceEntity;
 import com.riis.io.entity.UserEntity;
 import com.riis.io.repositories.UserRepository;
 import com.riis.service.UserService;
@@ -37,14 +38,17 @@ public class UserServiceImpl implements UserService {
 		UserEntity userEntity = new UserEntity();
 		BeanUtils.copyProperties(user, userEntity);
 
+		BalanceEntity userBalance = new BalanceEntity();
+		userBalance.setId(user.getId());
+		userBalance.setHoursBalance(120);
+		
 		userEntity.setFirstname(user.getFirstname());
 		userEntity.setLastname(user.getLastname());
 		userEntity.setEmail(user.getEmail());
 		userEntity.setRoleID(user.getRoleID());
 		userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
-
 		userEntity.setId(user.getId());
-
+		userEntity.setBalance(userBalance);
 		UserEntity storedUserDetails = userRepository.save(userEntity);
 
 		UserDto returnValue = new UserDto();
@@ -101,8 +105,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserDto> getAllUsers() {
 		List<UserDto> returnValue = new ArrayList<>();
-
-//		Iterable<UserEntity> userList = userRepository.findAllEmployeesWithHoursBalance();
 		
 		Iterable<UserEntity> userList = userRepository.findAll();
 
