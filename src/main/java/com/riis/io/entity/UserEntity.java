@@ -21,10 +21,6 @@ public class UserEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-//	@OneToOne(fetch=FetchType.LAZY)
-//	@PrimaryKeyJoinColumn(name="Id", referencedColumnName="EmployeeID")
-//	private BalanceEntity balance;
-	
 	@Column(name="Firstname", nullable = false, length = 20)
 	private String Firstname;
 

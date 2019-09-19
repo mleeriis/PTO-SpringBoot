@@ -47,9 +47,11 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 				"eyJhbGciOiJSUzI1NiIsImtpZCI6InMxIn0eyJzY3AiOlsib3BlbmlkIiwiZW1haWwiLCJwcm9maWxl";
 		
 		if (token != null) {
-			// parse the token.
-
 			String user = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
+			// TODO: Increase security by using an auto-generated key rather than a hard coded plain text key. 
+			/* To do this, need to implement a SigningKeyResolver
+			 * https://github.com/jwtk/jjwt#jws-read for more details on implementing a SigningKeyResolver
+			 */
 
 
 			if (user != null) {

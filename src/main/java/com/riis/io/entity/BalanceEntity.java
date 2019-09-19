@@ -50,6 +50,5 @@ public class BalanceEntity implements Serializable {
 
 	public void setEmployee(UserEntity employee) {
 		this.employee = employee;
-//		employee.setBalance(this);
 	}
 }

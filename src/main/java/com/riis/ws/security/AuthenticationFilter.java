@@ -2,7 +2,6 @@ package com.riis.ws.security;
 
 import java.io.IOException;
 import java.util.ArrayList;
-//import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -54,7 +53,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		String email = ((User) auth.getPrincipal()).getUsername();
 		res.addHeader("email", email);
 		res.addHeader("Success", "Successfully Logged In");
-//		Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 		String key = "eyJhbGciOiJSUzI1NiIsImtpZCI6InMxIn0eyJzY3AiOlsib3BlbmlkIiwiZW1haWwiLCJwcm9maWxl" +
 				"eyJhbGciOiJSUzI1NiIsImtpZCI6InMxIn0eyJzY3AiOlsib3BlbmlkIiwiZW1haWwiLCJwcm9maWxl" +
 				"eyJhbGciOiJSUzI1NiIsImtpZCI6InMxIn0eyJzY3AiOlsib3BlbmlkIiwiZW1haWwiLCJwcm9maWxl" +
@@ -63,7 +61,12 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 				"eyJhbGciOiJSUzI1NiIsImtpZCI6InMxIn0eyJzY3AiOlsib3BlbmlkIiwiZW1haWwiLCJwcm9maWxl";
 		
 		String token = Jwts.builder().setSubject(email).signWith(SignatureAlgorithm.HS512, key).compact();
-
+		// TODO: Update above to be more secure. 
+		/* Currently uses a plain text key rather than an auto-generated key and 
+		 * also using depreciated function call "signWith(EncrytionType, Plain Text Key)"
+		 * https://github.com/jwtk/jjwt#jws-key-create for more details on secure key generation
+		 */
+		
 		res.addHeader("Authorization", token);
 
 		System.out.println("$$$$$$$$$$$$$$$ SUCCESSFUL LOGIN $$$$$$$$$$$");

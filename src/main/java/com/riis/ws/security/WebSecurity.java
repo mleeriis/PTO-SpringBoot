@@ -52,6 +52,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
+	// TODO: Confirm which antMatchers are needed (if any) and remove if not
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
