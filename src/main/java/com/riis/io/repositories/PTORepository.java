@@ -14,7 +14,7 @@ public interface PTORepository extends PagingAndSortingRepository<PTOEntity, Int
 	PTOEntity findById(int id);
 	
 	@Query(value=
-			"SELECT R.Id, R.EmployeeID, CONCAT(E.Firstname, ' ', E.Lastname) AS FullName, R.StartDate, R.EndDate, R.Status FROM Requests AS R "+
+			"SELECT R.Id, R.EmployeeID, E.Firstname, E.Lastname, R.StartDate, R.EndDate, R.Status FROM Requests AS R "+
 	"LEFT JOIN Employees AS E ON E.id = R.EmployeeID WHERE R.EmployeeID = :empID", 
 			nativeQuery=true)
 	Page<PTOEntity> findAllPtoByEmpID(@Param("empID") int empId, Pageable pageableRequest);
