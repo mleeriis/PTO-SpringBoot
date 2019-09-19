@@ -103,10 +103,13 @@ public class PTOServiceImpl implements PTOService {
 		}
 
 		List<PTOEntity> ptoRequests = ptoPage.getContent();
+		
+//		List<PTOEntity> ptoRequests = ptoRepository.findAllPtoWithFullName();
 
 		for (PTOEntity ptoEntity : ptoRequests) {
 			PTODto ptoDto = new PTODto();
 			BeanUtils.copyProperties(ptoEntity, ptoDto);
+			ptoDto.setFullName(ptoEntity.getFirstname() + " " + ptoEntity.getLastname());
 			returnValue.add(ptoDto);
 		}
 

@@ -9,6 +9,8 @@ public class PTORest {
 	private Date EndDate;
 	private int Status;
 	private String FullName;
+//	private String Firstname;
+//	private String Lastname;
 	
 	public int getId() {
 		return Id;
@@ -46,5 +48,18 @@ public class PTORest {
 	public void setFullName(String fullName) {
 		FullName = fullName;
 	}
+//	public String getFirstname() {
+//		return Firstname;
+//	}
+//	public void setFirstname(String firstname) {
+//		Firstname = firstname;
+//	}
+//	public String getLastname() {
+//		return Lastname;
+//	}
+//	public void setLastname(String lastname) {
+//		Lastname = lastname;
+//	}
+	
 	
 }

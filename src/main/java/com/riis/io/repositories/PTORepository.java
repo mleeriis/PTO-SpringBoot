@@ -1,5 +1,7 @@
 package com.riis.io.repositories;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -20,11 +22,12 @@ public interface PTORepository extends PagingAndSortingRepository<PTOEntity, Int
 	Page<PTOEntity> findAllPtoByEmpID(@Param("empID") int empId, Pageable pageableRequest);
 	
 	@Query(value=
-			"SELECT R.Id, R.EmployeeID, CONCAT(E.Firstname, ' ', E.Lastname) AS FullName, R.StartDate, R.EndDate, R.Status FROM Requests AS R "+
+			"SELECT R.Id, R.EmployeeID, E.Firstname, E.Lastname, R.StartDate, R.EndDate, R.Status FROM Requests AS R "+
 	"LEFT JOIN Employees AS E ON E.id = R.EmployeeID", 
 	countQuery="SELECT COUNT(*) FROM Requests AS R " + 
 			"LEFT JOIN Employees AS E ON E.id = R.EmployeeID",
 			nativeQuery=true)
+//	@Query(nativeQuery=true, name="findAllWithFullName")
 	Page<PTOEntity> findAllPtoWithFullName(Pageable pageableRequest);
 	
 	//Update Balance table based on calculations from Add PTO

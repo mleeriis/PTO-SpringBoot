@@ -11,8 +11,10 @@ public class PTODto implements Serializable {
 	private Date StartDate;
 	private Date EndDate;
 	private int Status;
+	private String Firstname;
+	private String Lastname;
 	private String FullName;
-
+	
 	public int getId() {
 		return Id;
 	}
@@ -60,4 +62,22 @@ public class PTODto implements Serializable {
 	public void setFullName(String fullName) {
 		FullName = fullName;
 	}
+
+	public String getFirstname() {
+		return Firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		Firstname = firstname;
+	}
+
+	public String getLastname() {
+		return Lastname;
+	}
+
+	public void setLastname(String lastname) {
+		Lastname = lastname;
+	}
+	
+	
 }
