@@ -10,45 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
-//@SqlResultSetMapping(
-//name = "displayWithFullName", 
-//entities= {
-//		@EntityResult(
-//				entityClass=PTOEntity.class,
-//				fields= {
-//						@FieldResult(name = "EXAMPLEId", column="Requests.Id"), 
-//						@FieldResult(name = "EmployeeID", column="Requests.EmployeeID"), 
-//						@FieldResult(name = "StartDate", column="Requests.StartDate"), 
-//						@FieldResult(name = "EndDate", column="Requests.EndDate"), 
-//						@FieldResult(name = "Status", column="Requests.Status")
-//				}
-//				),
-//		@EntityResult(
-//				entityClass=BalanceEntity.class,
-//				fields= {
-//						@FieldResult(name = "FullName", column="Employees.Firstname"),
-//				})
-//}
-////classes = {
-////		@ConstructorResult(
-////		targetClass = PTOEntity.class, 
-////		columns = {
-////			@ColumnResult(name = "Id", type=Integer.class), 
-////			@ColumnResult(name = "EmployeeID", type=Integer.class), 
-////			@ColumnResult(name = "FullName", type=String.class),
-////			@ColumnResult(name = "StartDate", type=Date.class), 
-////			@ColumnResult(name = "EndDate", type=Date.class), 
-////			@ColumnResult(name = "Status", type=Integer.class) }
-////	)
-////}
-//)
-//
-//@NamedNativeQuery(name = "findAllWithFullName", 
-//resultClass = PTOEntity.class, 
-////resultSetMapping = "displayWithFullName", 
-//query = "SELECT Requests.Id, Requests.EmployeeID, Employees.Firstname AS FullName, Requests.StartDate, Requests.EndDate, Requests.Status FROM Requests LEFT JOIN Employees ON Employees.id = Requests.EmployeeID")
-
 @Entity
 @Table(name="Requests")
 @SecondaryTable(name="Employees")
