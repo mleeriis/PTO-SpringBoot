@@ -50,7 +50,7 @@ public class PTOServiceImpl implements PTOService {
 	}
 
 	@Override
-	public PTODto findPTO(int id) {
+	public PTODto getPTO(int id) {
 		PTOEntity ptoDetails = ptoRepository.findById(id);
 
 		if (ptoDetails == null)
@@ -112,7 +112,7 @@ public class PTOServiceImpl implements PTOService {
 	}
 
 	@Override
-	public List<PTODto> getPTO(int employeeId, int page, int limit) {
+	public List<PTODto> getAllPTO(int employeeId, int page, int limit) {
 		List<PTODto> returnValue = new ArrayList<>();
 		Page<PTOEntity> ptoPage;
 

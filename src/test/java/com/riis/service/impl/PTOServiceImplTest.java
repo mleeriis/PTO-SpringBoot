@@ -52,7 +52,7 @@ class PTOServiceImplTest {
 	void successfullyGetPtoWithCorrectDetails() {
 		when(ptoRepository.findById(anyInt())).thenReturn(ptoEntityStub);
 
-		PTODto returnedPtoDto = ptoService.findPTO(1);
+		PTODto returnedPtoDto = ptoService.getPTO(1);
 
 		assertNotNull(returnedPtoDto);
 		assertEquals(ptoEntityStub.getId(), returnedPtoDto.getId());
@@ -66,7 +66,7 @@ class PTOServiceImplTest {
 	void throwExceptionWhenPtoNotFound() {
 		when(ptoRepository.findById(anyInt())).thenReturn(null);
 
-		assertThrows(PTOServiceException.class, () -> {ptoService.findPTO(1);});
+		assertThrows(PTOServiceException.class, () -> {ptoService.getPTO(1);});
 		assertThrows(PTOServiceException.class, () -> {ptoService.updatePTO(1, ptoDtoStub);});
 		assertThrows(PTOServiceException.class, () -> {ptoService.deletePTO(2);});
 	}

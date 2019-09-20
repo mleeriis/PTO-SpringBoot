@@ -32,7 +32,7 @@ public class PTOController {
 	public PTORest getPTORequest(@PathVariable String id) {
 		PTORest returnValue = new PTORest();
 
-		PTODto ptoDto = ptoService.findPTO(Integer.valueOf(id));
+		PTODto ptoDto = ptoService.getPTO(Integer.valueOf(id));
 		BeanUtils.copyProperties(ptoDto, returnValue);
 
 		return returnValue;
@@ -80,7 +80,7 @@ public class PTOController {
 			@RequestParam(value = "limit", defaultValue = "25") int limit) {
 		List<PTORest> returnValue = new ArrayList<>();
 
-		List<PTODto> ptoList = ptoService.getPTO(employeeID, page, limit);
+		List<PTODto> ptoList = ptoService.getAllPTO(employeeID, page, limit);
 
 		for (PTODto ptoDto : ptoList) {
 			PTORest ptoEntry = new PTORest();
