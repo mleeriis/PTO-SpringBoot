@@ -73,6 +73,7 @@ public class PTOServiceImpl implements PTOService {
 			throw new PTOServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 
 		foundPto.setStatus(ptoDetails.getStatus());
+		// TODO: If PTO is approved, deduct appropriate amount of hours from 
 
 		PTOEntity updatedPtoDetails = ptoRepository.save(foundPto);
 		BeanUtils.copyProperties(updatedPtoDetails, returnValue);

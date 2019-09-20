@@ -12,7 +12,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Requests")
-@SecondaryTable(name="Employees")
+@SecondaryTables({
+    @SecondaryTable(name="Employees"),
+    @SecondaryTable(name="CurrentBalance")
+})
 public class PTOEntity implements Serializable {
 
 	private static final long serialVersionUID = -5961917022589138570L;
@@ -38,6 +41,9 @@ public class PTOEntity implements Serializable {
 	
 	@Column(insertable = false, updatable = false, table="Employees")
 	private String Lastname;
+	
+	@Column(insertable = false, updatable = false, table="CurrentBalance")
+	private int HoursBalance;
 	
 	public int getId() {
 		return Id;
@@ -80,6 +86,12 @@ public class PTOEntity implements Serializable {
 	}
 	public void setLastname(String lastname) {
 		Lastname = lastname;
+	}
+	public int getHoursBalance() {
+		return HoursBalance;
+	}
+	public void setHoursBalance(int hoursBalance) {
+		HoursBalance = hoursBalance;
 	}
 
 }

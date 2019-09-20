@@ -14,16 +14,18 @@ public interface PTORepository extends PagingAndSortingRepository<PTOEntity, Int
 	PTOEntity findById(int id);
 	
 	@Query(value=
-			"SELECT R.Id, R.EmployeeID, E.Firstname, E.Lastname, R.StartDate, R.EndDate, R.Status FROM Requests AS R "+
-	"LEFT JOIN Employees AS E ON E.id = R.EmployeeID WHERE R.EmployeeID = :empID", 
+				"SELECT R.Id, R.EmployeeID, E.Firstname, E.Lastname, R.StartDate, R.EndDate, R.Status, C.HoursBalance FROM Requests AS R "+
+				"LEFT JOIN Employees AS E ON E.id = R.EmployeeID " +
+				"LEFT JOIN CurrentBalance AS C ON C.EmployeeID = R.EmployeeID WHERE R.EmployeeID = :empID", 
+			countQuery="SELECT COUNT(*) FROM Requests AS R",
 			nativeQuery=true)
 	Page<PTOEntity> findAllPtoByEmpID(@Param("empID") int empId, Pageable pageableRequest);
 	
 	@Query(value=
-			"SELECT R.Id, R.EmployeeID, E.Firstname, E.Lastname, R.StartDate, R.EndDate, R.Status FROM Requests AS R "+
-	"LEFT JOIN Employees AS E ON E.id = R.EmployeeID", 
-	countQuery="SELECT COUNT(*) FROM Requests AS R " + 
-			"LEFT JOIN Employees AS E ON E.id = R.EmployeeID",
+				"SELECT R.Id, R.EmployeeID, E.Firstname, E.Lastname, R.StartDate, R.EndDate, R.Status, C.HoursBalance FROM Requests AS R "+
+				"LEFT JOIN Employees AS E ON E.id = R.EmployeeID " +
+				"LEFT JOIN CurrentBalance AS C ON C.EmployeeID = R.EmployeeID", 
+			countQuery="SELECT COUNT(*) FROM Requests AS R",
 			nativeQuery=true)
 	Page<PTOEntity> findAllPtoWithFullName(Pageable pageableRequest);
 	
