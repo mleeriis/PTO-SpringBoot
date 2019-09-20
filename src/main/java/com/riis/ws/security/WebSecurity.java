@@ -33,26 +33,14 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		http
 		.cors().and()
 		.csrf().disable().authorizeRequests()
-//		.antMatchers(HttpMethod.POST, SecurityConstraints.CREATE_EMPLOYEE_URL)
-//		.permitAll()
 		.antMatchers(HttpMethod.GET, "/employees/**")
 		.permitAll()
-//		.antMatchers(HttpMethod.POST, "/pto")
-//		.permitAll()
-//		.antMatchers(HttpMethod.GET, "/pto/**")
-//		.permitAll()
-//		.antMatchers(HttpMethod.PUT, "/pto/**")
-//		.permitAll()
-//		.antMatchers(HttpMethod.DELETE, "/pto/**")
-//		.permitAll()
 		.anyRequest().authenticated()
 		.and().addFilter(getAuthenticationFilter())
 		.addFilter(new AuthorizationFilter(authenticationManager()))
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
-	
-	// TODO: Confirm which antMatchers are needed (if any) and remove if not
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

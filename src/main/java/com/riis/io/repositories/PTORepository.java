@@ -31,7 +31,6 @@ public interface PTORepository extends PagingAndSortingRepository<PTOEntity, Int
 			nativeQuery=true)
 	Page<PTOEntity> findAllPtoWithFullName(Pageable pageableRequest);
 	
-	// TODO: Update Balance table based on calculations from Add PTO
 	@Query(value="SELECT HoursBalance FROM CurrentBalance WHERE EmployeeID = :empID", nativeQuery=true)
 	Integer getCurrentHoursBalanceForEmployee(@Param("empID") int empId);
 	

@@ -6,5 +6,4 @@ public interface BalanceService {
 	int getBalance(int employeeID);
 	void updateBalance(int employeeID, BalanceDto newBalanceDetails);
 	BalanceDto createBalance(BalanceDto balanceDetails);
-
 }
