@@ -14,7 +14,7 @@ public class PTODto implements Serializable {
 	private String Firstname;
 	private String Lastname;
 	private String FullName;
-	private int HoursBalance;
+//	private int HoursBalance;
 	
 	public int getId() {
 		return Id;
@@ -80,13 +80,13 @@ public class PTODto implements Serializable {
 		Lastname = lastname;
 	}
 
-	public int getHoursBalance() {
-		return HoursBalance;
-	}
-
-	public void setHoursBalance(int hoursBalance) {
-		HoursBalance = hoursBalance;
-	}
+//	public int getHoursBalance() {
+//		return HoursBalance;
+//	}
+//
+//	public void setHoursBalance(int hoursBalance) {
+//		HoursBalance = hoursBalance;
+//	}
 	
 	
 }

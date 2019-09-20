@@ -71,12 +71,11 @@ public class PTOServiceImpl implements PTOService {
 
 		if (foundPto == null)
 			throw new PTOServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-		if (foundPto.getStatus() == (1 | 3))
+		if (foundPto.getStatus() == 1 || foundPto.getStatus() == 3)
 			throw new PTOServiceException(ErrorMessages.REQUEST_ALREADY_APPROVED.getErrorMessage());
 
 		foundPto.setStatus(ptoDetails.getStatus());
 
-		// TODO: If PTO is approved, deduct appropriate amount of hours from CurrentBalance
 		if (ptoDetails.getStatus() == 1) {
 			int empID = foundPto.getEmployeeID();
 			Integer currentHoursBalance = ptoRepository.getCurrentHoursBalanceForEmployee(empID);
@@ -84,7 +83,6 @@ public class PTOServiceImpl implements PTOService {
 			int hoursUsed = this.calculateHoursUsed(empID, foundPto);
 			currentHoursBalance -= hoursUsed;
 			ptoRepository.updateHoursBalance(currentHoursBalance, empID);
-			foundPto.setHoursBalance(currentHoursBalance);
 		}
 
 		PTOEntity updatedPtoDetails = ptoRepository.save(foundPto);
@@ -100,8 +98,6 @@ public class PTOServiceImpl implements PTOService {
 		if (foundPto == null)
 			throw new PTOServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 
-		// TODO: If pto was approved and user cancels (deletes) it, add back the
-		// appropriate amount of hours to CurrentBalance
 		if(foundPto.getStatus() == 1) {
 			int empID = foundPto.getEmployeeID();
 			Integer currentHoursBalance = ptoRepository.getCurrentHoursBalanceForEmployee(empID);
@@ -140,6 +136,8 @@ public class PTOServiceImpl implements PTOService {
 	}
 
 	private int calculateHoursUsed(int empID, PTOEntity foundPto) {
+		// TODO: Calculate out weekends. Currently, this calculates based on calendar days, not work/week days
+		
 		int daysUsed = 0;
 
 		if (foundPto.getStartDate().compareTo(foundPto.getEndDate()) == 0) {

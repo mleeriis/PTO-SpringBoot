@@ -38,6 +38,7 @@ class PTOServiceImplTest {
 		ptoEntityStub.setStartDate(Date.valueOf("2019-10-11"));
 		ptoEntityStub.setEndDate(Date.valueOf("2019-10-30"));
 		ptoEntityStub.setStatus(2);
+		ptoEntityStub.setHoursBalance(120);
 		
 		ptoDtoStub.setId(1);
 		ptoDtoStub.setEmployeeID(1);
@@ -71,17 +72,34 @@ class PTOServiceImplTest {
 	}
 
 	@Test
-	void successfullyUpdatePtoDetails() {
+	void successfullyUpdatePtoStatus() {
 		when(ptoRepository.findById(anyInt())).thenReturn(ptoEntityStub);
 		when(ptoRepository.save(any(PTOEntity.class))).thenReturn(ptoEntityStub);
+		when(ptoRepository.getCurrentHoursBalanceForEmployee(anyInt())).thenReturn(120);
 		
 		ptoDtoStub.setStatus(1);
-
 		PTODto updatedPtoDto = ptoService.updatePTO(1, ptoDtoStub);
 
 		assertNotNull(updatedPtoDto);
 		assertEquals(ptoDtoStub.getStatus(), updatedPtoDto.getStatus());
 		verify(ptoRepository, times(1)).save(any(PTOEntity.class));
+		verify(ptoRepository, times(1)).updateHoursBalance(anyInt(), anyInt());
+	}
+	
+	@Test
+	void throwExceptionWhenUpdatingPtoIfPtoHasAlreadyBeenApproved() {
+		ptoEntityStub.setStatus(1);
+		when(ptoRepository.findById(anyInt())).thenReturn(ptoEntityStub);
+		
+		assertThrows(PTOServiceException.class, () -> {ptoService.updatePTO(1, ptoDtoStub);});
+	}
+	
+	@Test
+	void throwExceptionWhenUpdatingPtoIfPtoHasAlreadyBeenDenied() {
+		ptoEntityStub.setStatus(3);
+		when(ptoRepository.findById(anyInt())).thenReturn(ptoEntityStub);
+		
+		assertThrows(PTOServiceException.class, () -> {ptoService.updatePTO(1, ptoDtoStub);});
 	}
 	
 	@Test
