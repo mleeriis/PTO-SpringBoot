@@ -10,7 +10,8 @@ public enum ErrorMessages {
     COULD_NOT_DELETE_RECORD("Could not delete record"),
     EMAIL_ADDRESS_NOT_VERIFIED("Email address could not be verified"),
 	INVALID_END_DATE("End date cannot be before start date"),
-	DATES_MUST_BE_IN_FUTURE("Your request cannot be in the past");
+	DATES_MUST_BE_IN_FUTURE("Your request cannot be in the past"),
+	REQUEST_ALREADY_APPROVED("This request was already processed. Please refresh your page.");
     
 
     private String errorMessage;

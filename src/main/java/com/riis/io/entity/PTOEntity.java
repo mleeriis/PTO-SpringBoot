@@ -43,7 +43,7 @@ public class PTOEntity implements Serializable {
 	private String Lastname;
 	
 	@Column(insertable = false, updatable = false, table="CurrentBalance")
-	private int HoursBalance;
+	private Integer HoursBalance;
 	
 	public int getId() {
 		return Id;
@@ -87,10 +87,10 @@ public class PTOEntity implements Serializable {
 	public void setLastname(String lastname) {
 		Lastname = lastname;
 	}
-	public int getHoursBalance() {
+	public Integer getHoursBalance() {
 		return HoursBalance;
 	}
-	public void setHoursBalance(int hoursBalance) {
+	public void setHoursBalance(Integer hoursBalance) {
 		HoursBalance = hoursBalance;
 	}
 

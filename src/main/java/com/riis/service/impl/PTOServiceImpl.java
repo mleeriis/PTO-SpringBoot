@@ -71,9 +71,21 @@ public class PTOServiceImpl implements PTOService {
 
 		if (foundPto == null)
 			throw new PTOServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		if (foundPto.getStatus() == (1 | 3))
+			throw new PTOServiceException(ErrorMessages.REQUEST_ALREADY_APPROVED.getErrorMessage());
 
 		foundPto.setStatus(ptoDetails.getStatus());
-		// TODO: If PTO is approved, deduct appropriate amount of hours from 
+
+		// TODO: If PTO is approved, deduct appropriate amount of hours from CurrentBalance
+		if (ptoDetails.getStatus() == 1) {
+			int empID = foundPto.getEmployeeID();
+			Integer currentHoursBalance = ptoRepository.getCurrentHoursBalanceForEmployee(empID);
+
+			int hoursUsed = this.calculateHoursUsed(empID, foundPto);
+			currentHoursBalance -= hoursUsed;
+			ptoRepository.updateHoursBalance(currentHoursBalance, empID);
+			foundPto.setHoursBalance(currentHoursBalance);
+		}
 
 		PTOEntity updatedPtoDetails = ptoRepository.save(foundPto);
 		BeanUtils.copyProperties(updatedPtoDetails, returnValue);
@@ -87,6 +99,18 @@ public class PTOServiceImpl implements PTOService {
 
 		if (foundPto == null)
 			throw new PTOServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+
+		// TODO: If pto was approved and user cancels (deletes) it, add back the
+		// appropriate amount of hours to CurrentBalance
+		if(foundPto.getStatus() == 1) {
+			int empID = foundPto.getEmployeeID();
+			Integer currentHoursBalance = ptoRepository.getCurrentHoursBalanceForEmployee(empID);
+			int hoursUsed = this.calculateHoursUsed(empID, foundPto);
+			currentHoursBalance += hoursUsed;
+			ptoRepository.updateHoursBalance(currentHoursBalance, empID);
+			foundPto.setHoursBalance(currentHoursBalance);
+			
+		}
 
 		ptoRepository.delete(foundPto);
 	}
@@ -113,6 +137,20 @@ public class PTOServiceImpl implements PTOService {
 		}
 
 		return returnValue;
+	}
+
+	private int calculateHoursUsed(int empID, PTOEntity foundPto) {
+		int daysUsed = 0;
+
+		if (foundPto.getStartDate().compareTo(foundPto.getEndDate()) == 0) {
+			daysUsed = 1;
+		} else {
+			long timeDiff = foundPto.getEndDate().getTime() - foundPto.getStartDate().getTime();
+			long daysDiff = (timeDiff / (24 * 60 * 60 * 1000)) + 1;
+			daysUsed = (int) daysDiff;
+		}
+		int hoursUsed = daysUsed * 8;
+		return hoursUsed;
 	}
 
 }

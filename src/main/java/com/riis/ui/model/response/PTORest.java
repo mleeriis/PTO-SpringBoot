@@ -9,6 +9,7 @@ public class PTORest {
 	private Date EndDate;
 	private int Status;
 	private String FullName;
+	private int HoursBalance;
 	
 	public int getId() {
 		return Id;
@@ -45,5 +46,12 @@ public class PTORest {
 	}
 	public void setFullName(String fullName) {
 		FullName = fullName;
+	}
+	public int getHoursBalance() {
+		return HoursBalance;
+	}
+	public void setHoursBalance(int hoursBalance) {
+		HoursBalance = hoursBalance;
 	}	
+	
 }
